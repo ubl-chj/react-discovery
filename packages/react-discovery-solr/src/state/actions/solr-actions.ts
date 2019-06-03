@@ -17,7 +17,7 @@ const actionCreator = actionCreatorFactory()
 
 export const setQueryFields = actionCreator<{searchFields: ISearchField[]; sortFields: ISortField[];
   url: string; start: number; size: number;}>(SET_QUERY_FIELDS)
-export const setStart = actionCreator<{newStart: number}>(SET_START)
+export const setStart = actionCreator<{start: number}>(SET_START)
 export const setQueryInput = actionCreator<{stringInput: string}>(SET_QUERY_INPUT)
 export const setTypeDef = actionCreator<{typeDef: string}>(SET_TYPE_DEF)
 export const setSearchFields = actionCreator<{searchFields}>(SET_SEARCH_FIELDS)
@@ -25,7 +25,8 @@ export const setSortFields = actionCreator<{sortFields}>(SET_SORT_FIELDS)
 export const setSelectedFilters = actionCreator<{field: string; filters: string[]}>(SET_SELECTED_FILTERS)
 export const setSuggest = actionCreator<{suggest: boolean; stringInput?: string}>(SET_SUGGEST)
 export const setResponseError = actionCreator<{error: string}>(SET_RESPONSE_ERROR)
-interface IFetchSolrResponseParams { requestURI: string}
+interface IFetchSolrResponseParams {
+  requestURI: string;}
 type Succ = any;
 
 export const fetchSolrResponse: any = actionCreator.async<IFetchSolrResponseParams, Succ>(FETCH_SOLR_RESPONSE)

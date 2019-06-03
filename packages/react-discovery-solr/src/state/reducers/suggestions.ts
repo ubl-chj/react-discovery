@@ -18,12 +18,12 @@ export const suggestions = reducerWithInitialState(initialState)
     ...state,
     updating: true
   }))
-  .caseWithAction(fetchSolrSuggestions.done, (state: ISuggestionsState, action: any): any => ({
+  .case(fetchSolrSuggestions.done, (state: ISuggestionsState, {params, result}): any => ({
     ...state,
-    suggester: action.payload.result.suggest && action.payload.result.suggest.suggester,
-    terms: action.payload.result.suggest && buildTerms(action.payload.result.suggest.suggester),
+    suggester: result.suggest && result.suggest.suggester,
+    terms: result.suggest && buildTerms(result.suggest.suggester),
     updating: false,
-    url: action.payload.params.url,
+    url: params.url,
   }))
   .case(fetchSolrSuggestions.failed, (state, { error }): any => ({
     ...state,
