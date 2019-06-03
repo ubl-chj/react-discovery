@@ -14,7 +14,7 @@ export const buildQueryFieldParams = (typeDef: string, searchFields: ISearchFiel
   }
 }
 
-export const buildStringInputParams = (typeDef: string, stringInput: string): {} => {
+export const buildStringInputParams = (typeDef: string, stringInput: string, searchFields: ISearchField[]): {} => {
   if (!stringInput && typeDef === SolrParameters.EDISMAX) {
     return {
       [SolrParameters.QUERY]: '*',
@@ -22,6 +22,15 @@ export const buildStringInputParams = (typeDef: string, stringInput: string): {}
   } else if (!stringInput && typeDef === SolrParameters.LUCENE) {
     return {
       [SolrParameters.QUERY]: '*:*',
+    }
+  } else if (stringInput && typeDef === SolrParameters.LUCENE) {
+    const qfList = searchFields.filter((field: any): boolean => field.field.includes('_s')
+      || field.field.includes('_ss') || field.field.includes('_t')).map((searchField): string => {
+      return searchField.field
+    }).join(`:${stringInput} OR `)
+    const q = `{!parent which='-_nest_path_:* *:*'}${qfList}`
+    return {
+      [SolrParameters.QUERY]: q,
     }
   } else {
     return {
@@ -99,7 +108,7 @@ export const queryBuilder = (props: IEMaxQuery): string => {
     searchFields, sortFields, stringInput, size, start, typeDef, url} = props
   const qs = {
     ...buildQueryFieldParams(typeDef, searchFields),
-    ...buildStringInputParams(typeDef, stringInput),
+    ...buildStringInputParams(typeDef, stringInput, searchFields),
     ...buildTypeDefParams(typeDef),
     ...buildSortParams(sortFields),
     ...buildFacetFieldParams(searchFields),
