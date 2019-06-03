@@ -1,4 +1,4 @@
-FROM cypress/base:10
+FROM cypress/browsers:chrome67
 WORKDIR /app
 
 COPY package.json .

@@ -6,7 +6,7 @@
     "cypress:open": "CYPRESS_baseUrl=http://localhost:3000 cypress open",
     "test": "CYPRESS_baseUrl=http://localhost:3000 cypress run"
   },
-  "dependencies": {
+  "devDependencies": {
     "cypress": "^3.3.1"
   }
 }
