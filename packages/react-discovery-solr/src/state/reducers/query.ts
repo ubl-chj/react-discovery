@@ -9,10 +9,10 @@ import {
   setSuggest,
   setTypeDef
 } from "../actions"
-
+import {IQuery} from "../.."
 
 export const query = (initialState): any => reducerWithInitialState(initialState)
-  .case(setQueryFields, (state, {searchFields, size, sortFields, start}): ReducerBuilder<any> => ({
+  .case(setQueryFields, (state, {searchFields, size, sortFields, start}): ReducerBuilder<IQuery> => ({
     ...state,
     searchFields,
     size,

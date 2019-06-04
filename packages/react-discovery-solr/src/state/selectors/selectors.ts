@@ -9,7 +9,7 @@ import {
   IResponse,
   ISearchField,
   ISortField
-} from "../../api"
+} from "../.."
 import {useSelector} from "react-redux"
 
 export const getAggregation = (field): IAggregation => {

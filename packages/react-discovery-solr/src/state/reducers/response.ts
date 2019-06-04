@@ -1,4 +1,4 @@
-import {IAggregations, IHit, IHits, IResponse} from "../../api"
+import {IAggregations, IHit, IHits, IResponse} from "../.."
 import {fetchSolrResponse} from '../actions'
 import {reducerWithInitialState} from 'typescript-fsa-reducers'
 

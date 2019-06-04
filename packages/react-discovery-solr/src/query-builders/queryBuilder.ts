@@ -1,4 +1,4 @@
-import {IEMaxQuery, IFilters, ISearchField, ISortField} from "."
+import {IFilters, IQuery, ISearchField, ISortField} from ".."
 import {FacetTypes} from "./FacetTypes"
 import {SolrParameters} from "./SolrParameters"
 const queryString = require('query-string')
@@ -24,11 +24,23 @@ export const buildStringInputParams = (typeDef: string, stringInput: string, sea
       [SolrParameters.QUERY]: '*:*',
     }
   } else if (stringInput && typeDef === SolrParameters.LUCENE) {
-    const qfList = searchFields.filter((field: any): boolean => field.field.includes('_s')
-      || field.field.includes('_ss') || field.field.includes('_t')).map((searchField): string => {
-      return searchField.field
-    }).join(`:${stringInput} OR `)
-    const q = `{!parent which='-_nest_path_:* *:*'}${qfList}`
+    const replaced = stringInput.replace(/\s/g, "+")
+    const parentQfList = searchFields
+      .filter((field: any): boolean => !("isChild" in field)
+        && (field.field.includes('_s')
+      || field.field.includes('_ss') || field.field.includes('_t')))
+      .map((searchField): string => {
+        return searchField.field
+      })
+      .join(`:${replaced} || `)
+    const childQfList = `{!parent which='-_nest_path_:* *:*'}${searchFields
+      .filter((field: any): boolean =>
+        field.isChild === true && (field.field.includes('_s')
+      || field.field.includes('_ss')
+      || field.field.includes('_t')))
+      .map((searchField): string => { return searchField.field })
+      .join(`:${replaced} || {!parent which='-_nest_path_:* *:*'}`)}`
+    const q = `${parentQfList}:${replaced} || ${childQfList}:${replaced}`
     return {
       [SolrParameters.QUERY]: q,
     }
@@ -103,7 +115,7 @@ export const buildIsFaceted = (facet: boolean = true): {} => {
   return {[SolrParameters.FACET]: facet}
 }
 
-export const queryBuilder = (props: IEMaxQuery): string => {
+export const queryBuilder = (props: IQuery): string => {
   const {facetLimit, facetSort, fieldList, filters, group, groupField, highlighting,
     searchFields, sortFields, stringInput, size, start, typeDef, url} = props
   const qs = {

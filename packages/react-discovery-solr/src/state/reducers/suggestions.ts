@@ -13,6 +13,7 @@ const buildTerms = (suggester): string[] => {
   const suggestions: any = Object.values(suggester)[0]
   return suggestions.suggestions.map((s): string => s.term)
 }
+
 export const suggestions = reducerWithInitialState(initialState)
   .case(fetchSolrSuggestions.started, (state): any => ({
     ...state,
