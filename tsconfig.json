@@ -4,7 +4,7 @@
     "paths": { "*": ["types/*"] },
     "declaration": true,
     "module": "commonjs",
-    "target": "ES5",
+    "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "lib",

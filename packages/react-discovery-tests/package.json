@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "cypress:open": "CYPRESS_baseUrl=http://localhost:3000 cypress open",
-    "report:coverage": "nyc report --reporter=html",
-    "test": "DEBUG=code-coverage CYPRESS_baseUrl=http://localhost:3000 cypress run"
+    "report:coverage": "nyc report --reporter=text",
+    "test": "CYPRESS_baseUrl=http://localhost:3000 cypress run --env DEBUG=code-coverage"
   },
   "dependencies": {
     "@react-discovery/i18n": "file:../react-discovery-i18n",
@@ -13,10 +13,12 @@
     "@types/react-redux": "file:../@types-react-redux"
   },
   "devDependencies": {
-    "babel-plugin-istanbul": "^5.1.4",
     "cypress": "^3.3.1",
     "@cypress/code-coverage": "^1.3.2",
     "nyc": "^14.1.1",
-    "istanbul-lib-coverage": "^2.0.5"
+    "istanbul-lib-coverage": "^2.0.5",
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
+    "source-map-support": "^0.5.12",
+    "ts-node": "^8.2.0"
   }
 }
