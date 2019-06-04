@@ -33,6 +33,7 @@
     "babel-eslint": "10.0.1",
     "babel-jest": "24.7.1",
     "babel-loader": "8.0.5",
+    "babel-plugin-istanbul": "^5.1.4",
     "babel-plugin-named-asset-import": "^0.3.2",
     "babel-preset-react-app": "^8.0.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
@@ -145,6 +146,9 @@
     ]
   },
   "babel": {
+    "plugins": [
+      "istanbul"
+    ],
     "presets": [
       "react-app"
     ]
