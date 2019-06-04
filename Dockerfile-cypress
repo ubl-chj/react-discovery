@@ -1,0 +1,14 @@
+FROM cypress/browsers:chrome67
+WORKDIR /app
+
+COPY package.json .
+COPY packages ./packages
+RUN npm install
+RUN npm install --global lerna
+COPY lerna.json .
+COPY tsconfig.json .
+RUN lerna bootstrap --hoist
+RUN lerna run build
+RUN npx cypress verify
+
+COPY packages/react-discovery-app/cypress.json .
