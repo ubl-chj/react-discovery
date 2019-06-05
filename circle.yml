@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
 jobs:
   build:
     machine:
@@ -7,7 +9,7 @@ jobs:
       - checkout
       - run: docker-compose -f ci-tests.yml build
       - run: docker-compose -f ci-tests.yml up --abort-on-container-exit --exit-code-from e2e
-
+      - run: codecov
 workflows:
   build:
     jobs:

@@ -20,6 +20,5 @@ services:
       - react-discovery
     environment:
       - CYPRESS_baseUrl=http://react-discovery:5000
-    volumes:
-      - ./packages/react-discovery-app/cypress:/app/cypress
     command: npx cypress run --browser chrome
+

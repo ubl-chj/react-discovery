@@ -4,7 +4,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:ubl-chj/solr-react.git"
+    "url": "git@github.com:ubl-chj/react-discovery.git"
   },
   "author": {
     "name": "Christopher Johnson",
@@ -43,6 +43,7 @@
     "autoprefixer": "^9.4.3",
     "awesome-typescript-loader": "^5.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "codecov": "^3.5.0",
     "css-loader": "^1.0.0",
     "cypress": "^3.3.1",
     "dotenv": "^8.0.0",
