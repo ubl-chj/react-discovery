@@ -37,3 +37,8 @@ REACT_APP_SEARCH_API_COLLECTION=test01
 
 ### Continuous Deployment
 https://react-discovery.netlify.com/
+
+### Testing
+```bash
+ $ lerna run test
+```

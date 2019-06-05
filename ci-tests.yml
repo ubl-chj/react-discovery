@@ -20,5 +20,7 @@ services:
       - react-discovery
     environment:
       - CYPRESS_baseUrl=http://react-discovery:5000
-    command: npx cypress run --browser chrome
+    volumes:
+      - ./packages/react-discovery-app/cypress:/app/cypress
+    command: bash -c "npx cypress run --browser chrome && npm run report"
 
