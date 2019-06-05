@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme): any => ({
   },
 }));
 
-const KODExpanded: React.FC<IDefaultItemComponent> = (props): ReactElement => {
+const KulturobjektExpanded: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   const [isExpanded, setExpanded] = React.useState(false);
   const classes: any = useStyles({})
   const {hit, i, searchFields} = props
@@ -172,4 +172,4 @@ const KODExpanded: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   ) : null
 }
 
-export default KODExpanded
+export default KulturobjektExpanded

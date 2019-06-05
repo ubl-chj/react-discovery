@@ -73,7 +73,7 @@
     "jss": "^10.0.0-alpha.16",
     "jss-plugin-template": "^10.0.0-alpha.3",
     "jss-rtl": "^0.2.3",
-    "lerna": "^3.13.0",
+    "lerna": "^3.14.1",
     "nodemon": "^1.18.10",
     "nyc": "^14.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",

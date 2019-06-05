@@ -13,6 +13,8 @@ services:
   e2e:
     image: cypress
     build:
+      args:
+        CIRCLE_BRANCH: $CIRCLE_BRANCH
       context: .
       dockerfile: Dockerfile-cypress
     container_name: cypress
@@ -20,7 +22,5 @@ services:
       - react-discovery
     environment:
       - CYPRESS_baseUrl=http://react-discovery:5000
-    volumes:
-      - ./packages/react-discovery-app/cypress:/app/cypress
     command: bash -c "npx cypress run --browser chrome && npm run report"
 

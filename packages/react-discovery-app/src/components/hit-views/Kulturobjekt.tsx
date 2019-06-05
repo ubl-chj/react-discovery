@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme): any => ({
   },
 }));
 
-const KOD: React.FC<IDefaultItemComponent> = (props): ReactElement => {
+const Kulturobjekt: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   const classes: any = useStyles({})
   const {hit, i} = props
   const title = buildHighlightedValueForHit('titel_t', hit)
@@ -61,4 +61,4 @@ const KOD: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   ) : null
 }
 
-export default KOD
+export default Kulturobjekt

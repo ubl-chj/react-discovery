@@ -38,7 +38,6 @@
     "@material-ui/styles": "^4.0.1",
     "@react-discovery/i18n": "file:../react-discovery-i18n",
     "@react-discovery/solr": "file:../react-discovery-solr",
-    "@types/react-redux": "file:../@types-react-redux",
     "clsx": "^1.0.4",
     "deepmerge": "^3.2.0",
     "downshift": "^3.2.10",

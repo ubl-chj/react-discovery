@@ -2,7 +2,7 @@ import {IConfig} from "../index"
 
 export const test02: IConfig = {
   collections: {
-    nested: {
+    test02: {
       docTypes: ['Kulturobjekt', 'Beschreibung', 'Digitalisat', 'Person', 'Werke'],
       hitComponents: [
         {
@@ -43,10 +43,10 @@ export const test02: IConfig = {
           title: "Person"
         },
       ],
-      initialFilter: {'type_s': ['KOD']},
+      initialFilter: {'type_s': ['Kulturobjekt']},
       refinementListFilters: {
         1: {
-          field: "entstehungsort_t",
+          field: "entstehungsort_s",
           label: "originPlace",
         },
         2: {
@@ -113,7 +113,7 @@ export const test02: IConfig = {
           type: "list-facet"
         },
         {
-          field: "entstehungsort_t",
+          field: "entstehungsort_s",
           label: "originPlace",
           type: "list-facet"
         },
@@ -149,51 +149,55 @@ export const test02: IConfig = {
         },
         {
           field: "personFullname_t",
+          isChild: true,
           label: "personFullName",
           type: "list-facet"
         },
         {
           field: "personBirthDate_dt",
+          isChild: true,
           label: "personBirthDate",
           type: "range-racet"
         },
         {
           field: "personDeathDate_dt",
+          isChild: true,
           label: "personDeathDate",
           type: "range-racet"
         },
         {
-          field: "personDeathDate_dt",
-          label: "personDeathDate",
-          type: "text"
-        },
-        {
           field: "personBirthPlace_t",
+          isChild: true,
           label: "personBirthPlace",
           type: "list-facet"
         },
         {
           field: "personDeathPlace_t",
+          isChild: true,
           label: "personDeathPlace",
           type: "list-facet"
         },
         {
           field: "personWorkingPlace_t",
+          isChild: true,
           label: "personWorkingPlace",
           type: "list-facet"
         },
         {
           field: "personOccupation_t",
+          isChild: true,
           label: "personOccupation",
           type: "list-facet"
         },
         {
           field: "personGender_s",
+          isChild: true,
           label: "personGender",
           type: "list-facet"
         },
         {
           field: "personAlternateNames_ss",
+          isChild: true,
           label: "personAlternateNames",
           type: "list-facet"
         },
