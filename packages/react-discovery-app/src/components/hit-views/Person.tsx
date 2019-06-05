@@ -40,7 +40,7 @@ const Person: React.FC<IPerson> = (props): ReactElement => {
   const filteredFields = ['personBirthDate', 'personDeathDate', 'personBirthPlace',
     'personDeathPlace', 'personWorkingPlace', 'personOccupation']
   const displayFields = searchFields.filter((sf): boolean => filteredFields.includes(sf.label))
-  const title = buildHighlightedValueForHit('personFullName_t', hit)
+  const title = buildHighlightedValueForHit('personFullname_t', hit)
 
   return hit ? (
     <Card className={classes.root} key={i}>

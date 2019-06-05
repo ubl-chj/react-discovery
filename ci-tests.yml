@@ -22,5 +22,6 @@ services:
       - react-discovery
     environment:
       - CYPRESS_baseUrl=http://react-discovery:5000
+      - CODECOV_TOKEN=$CODECOV_TOKEN
     command: bash -c "npx cypress run --browser chrome && npm run report"
 
