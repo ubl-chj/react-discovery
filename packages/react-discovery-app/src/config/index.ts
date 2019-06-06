@@ -39,7 +39,7 @@ export interface IConfig {
       url: string;
     };
   };
-  highlighting?: boolean;
+  isHighlighted?: boolean;
   languages?: ILanguage[];
   isViewExpanded?: boolean;
   selectedIndex?: number;

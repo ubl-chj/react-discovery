@@ -53,7 +53,7 @@ export interface IQuery {
   filters: IFilters;
   group?: boolean;
   groupField?: string;
-  highlighting: boolean;
+  isHighlighted: boolean;
   searchFields: ISearchField[];
   sortFields: ISortField[];
   start: number;

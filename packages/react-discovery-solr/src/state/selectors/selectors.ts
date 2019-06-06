@@ -37,8 +37,8 @@ export const getFilterType = (): string => {
   return useSelector((state: any): string => state.query.filters && state.query.filters.type_s && state.query.filters.type_s[0])
 }
 
-export const getHighlighting = (): boolean => {
-  return useSelector((state: any): boolean => state.query.highlighting)
+export const getIsHighlighted = (): boolean => {
+  return useSelector((state: any): boolean => state.query.isHighlighted)
 }
 
 export const getHitComponents = (): IHitComponent[] => {
@@ -120,7 +120,7 @@ export const getUrl = (): string => {
 
 export const getInitialQuery = (): IQuery => {
   const filters = getFilters()
-  const highlighting = getHighlighting()
+  const isHighlighted = getIsHighlighted()
   const searchFields = getSearchFields()
   const size = getSize()
   const sortFields = getSortFields()
@@ -130,5 +130,5 @@ export const getInitialQuery = (): IQuery => {
   const suggestDictionary = getSuggestDictionary()
   const typeDef = getTypeDef()
   const url = getUrl()
-  return {filters, highlighting, searchFields, size, sortFields, start, stringInput, suggest, suggestDictionary, typeDef, url}
+  return {filters, isHighlighted, searchFields, size, sortFields, start, stringInput, suggest, suggestDictionary, typeDef, url}
 }

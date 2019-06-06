@@ -88,7 +88,7 @@ describe("solr query builder", () => {
         filters,
         group: false,
         groupField: '',
-        highlighting: true,
+        isHighlighted: true,
         searchFields,
         size: 20,
         sortFields,

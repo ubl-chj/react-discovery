@@ -1,7 +1,7 @@
 import {Book, Image} from '@material-ui/icons'
 import {Card, CardActions, CardContent, Typography, makeStyles} from "@material-ui/core"
 import {RandomThumbnail, TitleIdHeader, ValueDisplay} from '.'
-import React, {ReactElement} from "react"
+import React, {Fragment, ReactElement} from "react"
 import {buildEntityCountForType, buildHighlightedValueForHit} from "../../utils"
 import {IHit} from "@react-discovery/solr"
 
@@ -41,8 +41,7 @@ const Kulturobjekt: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   const classes: any = useStyles({})
   const {hit, i, searchFields} = props
   const title = buildHighlightedValueForHit('titel_t', hit)
-  const filteredFields = ['material', 'format', 'originPlace', 'originDate', 'formType',
-    'status', 'writingStyle', 'language', 'previousOwner']
+  const filteredFields = ['material', 'format', 'originPlace', 'originDate']
   const displayFields = searchFields.filter((sf): boolean => filteredFields.includes(sf.label))
   return hit ? (
     <Card className={classes.root} key={i}>
@@ -65,10 +64,10 @@ const Kulturobjekt: React.FC<IDefaultItemComponent> = (props): ReactElement => {
           </CardContent>
           <CardContent className={classes.content}>
             {displayFields.map((field, key): ReactElement =>
-              <>
-              <ValueDisplay field={field.field} hit={hit} key={key} style={{flex: 'auto'}} variant='body2'/>
+              <Fragment key={key}>
+                <ValueDisplay field={field.field} hit={hit} style={{flex: 'auto'}} variant='body2'/>
                 {'\u00A0\u2223\u00A0'}
-              </>)}
+              </Fragment>)}
           </CardContent>
           <CardActions disableSpacing>
             <Image fontSize='small' htmlColor='#86173e' style={{padding: '5px'}}/>

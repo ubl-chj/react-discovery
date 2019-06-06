@@ -26,7 +26,7 @@ const configReducer: Reducer = config(initialConfigState)
 const initialQueryState: IQuery = {
   fieldList: null,
   filters: initialFilter || {},
-  highlighting: true,
+  isHighlighted: true,
   searchFields,
   size: 20,
   sortFields,
