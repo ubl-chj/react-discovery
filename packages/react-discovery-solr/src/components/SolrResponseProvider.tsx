@@ -1,13 +1,26 @@
 import React, {ReactElement, useEffect, useState} from "react"
-import {fetchSolrResponseWorker, fetchSolrSuggestionsWorker, getFilters, getRootContext, getSelectedIndex, getSize, getSortFields,
-  getStart, getStringInput, getSuggest, setQueryFields, setSelectedIndex} from "../state"
+import {
+  fetchSolrResponseWorker,
+  fetchSolrSuggestionsWorker,
+  getFilters,
+  getRootContext,
+  getSelectedIndex,
+  getSize,
+  getSortFields,
+  getStart,
+  getStringInput,
+  getSuggest,
+  setQueryFields,
+  setSelectedIndex
+} from "../state"
 import {queryBuilder, suggestQueryBuilder} from "../query-builders"
 import {useCurrentRoute, useNavigation} from 'react-navi'
 import {IQuery} from ".."
 import {getInitialQuery} from "../state/selectors"
-import {stringify} from 'query-string'
+import {pushHistory} from "../history"
 import {useDispatch} from 'react-redux'
 import {usePrevious} from "../hooks"
+const isEqual = require('lodash/isEqual')
 
 export const SolrResponseProvider: React.FC<any> = (props): ReactElement => {
   const rootContext = getRootContext()
@@ -32,19 +45,7 @@ export const SolrResponseProvider: React.FC<any> = (props): ReactElement => {
   const sortFields = getSortFields()
   const prevSortFields = usePrevious(sortFields)
   const [isInitialized, setIsInitialized] = useState(false)
-
-  const pushHistory = (): any => {
-    const search = (stringInput && start) ? {
-      q: stringInput,
-      start
-    } : !start && stringInput ? {q: stringInput} : start ? {start} : null
-
-    const url = {
-      pathname: rootContext,
-      search: `?${stringify(search)}`,
-    }
-    navigation.navigate(url)
-  }
+  const mergedQuery = {...query, ...qString}
 
   const fetchResponse = (requestURI): boolean => {
     dispatch(fetchSolrResponseWorker({requestURI}))
@@ -58,7 +59,6 @@ export const SolrResponseProvider: React.FC<any> = (props): ReactElement => {
 
   useEffect((): void => {
     if (!isInitialized) {
-      const mergedQuery = {...query, ...qString}
       dispatch(setQueryFields({...mergedQuery}))
       const currentPage = urlStart ? urlStart / size : 0
       dispatch(setSelectedIndex({selectedIndex: currentPage}))
@@ -68,11 +68,12 @@ export const SolrResponseProvider: React.FC<any> = (props): ReactElement => {
     }
     if (isInitialized) {
       if (prevSelectedIndex !== selectedIndex || prevStringInput !== stringInput
-        || prevFilters !== filters || prevSortFields !== sortFields) {
-        pushHistory()
-        const responseRequestURI = queryBuilder({...query})
-        fetchResponse(responseRequestURI)
-        console.log('did update')
+        || filters !== prevFilters || prevSortFields !== sortFields) {
+        pushHistory(navigation, stringInput, start, rootContext)
+        if (!isEqual(mergedQuery, query) || filters !== prevFilters || prevSortFields !== sortFields) {
+          const responseRequestURI = queryBuilder({...query})
+          fetchResponse(responseRequestURI)
+        }
       }
     }
 
