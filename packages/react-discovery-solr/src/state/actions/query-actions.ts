@@ -14,7 +14,7 @@ const SET_TYPE_DEF = "SET_TYPE_DEF"
 
 export const setGroupField = actionCreator<{groupField: string}>(SET_GROUP_FIELD);
 export const setQueryFields = actionCreator<{searchFields: ISearchField[]; sortFields: ISortField[];
-  start: number; size: number; url: string;}>(SET_QUERY_FIELDS)
+  start: number; size: number; stringInput: string; url: string;}>(SET_QUERY_FIELDS)
 export const setStart = actionCreator<{start: number}>(SET_START)
 export const setQueryInput = actionCreator<{stringInput: string}>(SET_QUERY_INPUT)
 export const setTypeDef = actionCreator<{typeDef: string}>(SET_TYPE_DEF)
