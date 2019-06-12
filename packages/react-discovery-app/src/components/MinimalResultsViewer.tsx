@@ -1,14 +1,12 @@
 import {FacetViewSwitcher, GroupSelectedFilters, HitStats, Pagination, RefinementListFilters,
   SearchAppBar, SortingSelector, Suggester, TabsAppBar} from '.'
+import React, {ReactElement, useEffect} from 'react'
 import {
-  IQuery,
   SolrResponseProvider,
   getCurrentLanguage,
   getHits,
-  getInitialQuery,
   usePrevious,
 } from '@react-discovery/solr'
-import React, {ReactElement, useEffect} from 'react'
 import {Theme, createStyles, makeStyles} from "@material-ui/core"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'

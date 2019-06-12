@@ -3,6 +3,7 @@ import {AnyAction, Store, applyMiddleware, createStore} from "redux"
 import { Router, View } from 'react-navi'
 import { mount, route } from 'navi'
 import thunkMiddleware, { ThunkMiddleware } from 'redux-thunk'
+import {DetailsView} from './components/hit-views'
 import {MinimalResultsViewer} from './components'
 import {Provider} from 'react-redux'
 import React from "react"
@@ -18,6 +19,12 @@ const routes =
       title: "React Discovery",
       view: <MinimalResultsViewer />,
     }),
+    '/detail/:id': route(async (req): Promise<any> => {
+      let id = req.params.id
+      return {
+        view: <DetailsView id={id} />,
+      }
+    })
   })
 
 const store: Store = createStore(
