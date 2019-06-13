@@ -1,28 +1,44 @@
+import {Card, CardActions, CardContent, createStyles, Grid, makeStyles, Theme} from "@material-ui/core"
 import {
-  Card,
-  CardActions,
-  CardContent,
-} from "@material-ui/core"
-import {Domain, useHitViewStyles} from '.'
-import {
+  DetailBreadcrumbs,
+  Domain,
   EntityDisplay,
-  FieldLabel,
-  Thumbnail,
-  TitleIdHeader,
-  ValueDisplay,
-  ViewSwitcherToggle,
   annotationDisplayFields,
   beschreibungDisplayFields,
   digitalisatDisplayFields,
-  facetDisplayFields, personDisplayFields
-} from '..'
+  facetDisplayFields,
+  personDisplayFields,
+  useHitViewStyles,
+} from '.'
+import {FieldValueDisplay, SearchAppBar, Thumbnail, TitleIdHeader, ValueDisplay} from '..'
 import React, {ReactElement, useEffect, useState} from "react"
-import {buildHighlightedValueForHit, buildRandomUBLThumbnail} from "../../utils"
+import {buildHighlightedValueForHit, buildRandomUBLThumbnail, getTypeForId} from "../../utils"
 import {getHits, getSearchFields, getStringInput, setQueryInput, usePrevious} from "@react-discovery/solr"
+import Beschreibung from './Beschreibung'
+import Digitalisat from './Digitalisat'
+import Person from './Person'
+import {useDispatch} from "react-redux"
 
 interface IDetailsView {
   id: string;
 }
+
+const useStyles = makeStyles((theme: Theme): any =>
+  createStyles({
+    gridActions: {
+      alignItems: 'center',
+      marginTop: '50px',
+      padding: '10px'
+    },
+    gridContent: {
+      backgroundColor: 'lightgray',
+      padding: 20
+    },
+    progress: {
+      margin: theme.spacing(2),
+    },
+  }),
+)
 
 // TODO add this to configuration
 const filteredFields = ['author', 'material', 'format', 'originPlace', 'originDate', 'formType',
@@ -35,83 +51,111 @@ export const DetailsView: React.FC<IDetailsView> = (props): ReactElement => {
   const [isInitialized, setIsInitialized] = useState(false)
   const hits = getHits()
   const searchFields = getSearchFields()
-  const [hit] = hits && hits.hits
+  const hit = hits && hits.hits.length ? hits.hits[0] : null
+  const dispatch = useDispatch()
+
   useEffect((): void => {
     if (!isInitialized) {
-      setQueryInput({stringInput: id})
+      dispatch(setQueryInput({stringInput: id}))
       setIsInitialized(true)
     } else if (prevStringInput !== stringInput) {
-      setQueryInput({stringInput: id})
+      dispatch(setQueryInput({stringInput: id}))
     }
   })
-
+  const lClasses: any = useStyles({})
   const classes: any = useHitViewStyles({})
   const displayFields = searchFields.filter((sf): boolean => filteredFields.includes(sf.label))
-  const title = buildHighlightedValueForHit('titel_t', hit)
-  const buildFieldValueDisplay = (field): ReactElement => {
+  const title = hit && buildHighlightedValueForHit('titel_t', hit)
+  const type = hit && getTypeForId(hit, id)
+  console.log(type)
+  const buildKulturObjekt = () => {
     return (
-      <>
-        <FieldLabel label={field.label}/>
-        <ValueDisplay field={field.field} hit={hit} style={{flex: 'auto'}}/>
-      </>)
+      <Card className={classes.root}>
+        <TitleIdHeader
+          id={hit._source.id}
+          title={title}
+        />
+        <div style={{display: 'flex'}}>
+          <Thumbnail image={buildRandomUBLThumbnail()}/>
+          <div className={classes.details}>
+            <ValueDisplay
+              field={'subtitel_t'}
+              hit={hit}
+              style={{display: 'flex', padding: '10px'}}
+              variant='h6'
+            />
+            {displayFields.map((field, key): ReactElement =>
+              <CardContent
+                className={classes.content}
+                key={key}
+              >{hit._source && hit._source[field.field] ?
+                  <FieldValueDisplay field={field} hit={hit}/> : null}
+              </CardContent>)}
+            <CardActions disableSpacing>
+              <EntityDisplay
+                displayFields={digitalisatDisplayFields}
+                hit={hit}
+                type={Domain.DIGITALISAT}
+              />
+            </CardActions>
+            <CardActions disableSpacing>
+              <EntityDisplay
+                displayFields={beschreibungDisplayFields}
+                hit={hit}
+                isNested={true}
+                nestedDisplayFields={facetDisplayFields}
+                type={Domain.BESCHREIBUNG}
+              />
+            </CardActions>
+            <CardActions disableSpacing>
+              <EntityDisplay
+                displayFields={personDisplayFields}
+                hit={hit}
+                type={Domain.PERSON}
+              />
+            </CardActions>
+            <CardActions disableSpacing>
+              <EntityDisplay
+                displayFields={annotationDisplayFields}
+                hit={hit}
+                type={Domain.ANNOTATION}
+              />
+            </CardActions>
+          </div>
+        </div>
+      </Card>
+    )
   }
 
-  return hit ? (
-    <Card className={classes.root}>
-      <ViewSwitcherToggle id={id}/>
-      <TitleIdHeader
-        id={hit._source.id}
-        title={title}
-      />
-      <div style={{display: 'flex'}}>
-        <Thumbnail image={buildRandomUBLThumbnail()}/>
-        <div className={classes.details}>
-          <ValueDisplay
-            field={'subtitel_t'}
-            hit={hit}
-            style={{display: 'flex', padding: '10px'}}
-            variant='h6'
-          />
-          {displayFields.map((field, key): ReactElement =>
-            <CardContent
-              className={classes.content}
-              key={key}
-            >{hit._source && hit._source[field.field] ?
-                buildFieldValueDisplay(field) : null}
-            </CardContent>)}
-          <CardActions disableSpacing>
-            <EntityDisplay
-              displayFields={digitalisatDisplayFields}
-              hit={hit}
-              type={Domain.DIGITALISAT}
-            />
-          </CardActions>
-          <CardActions disableSpacing>
-            <EntityDisplay
-              displayFields={beschreibungDisplayFields}
-              hit={hit}
-              isNested={true}
-              nestedDisplayFields={facetDisplayFields}
-              type={Domain.BESCHREIBUNG}
-            />
-          </CardActions>
-          <CardActions disableSpacing>
-            <EntityDisplay
-              displayFields={personDisplayFields}
-              hit={hit}
-              type={Domain.PERSON}
-            />
-          </CardActions>
-          <CardActions disableSpacing>
-            <EntityDisplay
-              displayFields={annotationDisplayFields}
-              hit={hit}
-              type={Domain.ANNOTATION}
-            />
-          </CardActions>
-        </div>
-      </div>
-    </Card>
-  ) : null
-}
+  const buildObjectForType = (type): ReactElement => {
+    switch (type) {
+      case Domain.BESCHREIBUNG:
+        return (<Beschreibung hit={hit}/>)
+      case Domain.DIGITALISAT:
+        return (<Digitalisat hit={hit}/>)
+      case Domain.KULTUROBJEKT:
+        return buildKulturObjekt()
+      case Domain.PERSON:
+        return (<Person hit={hit}/>)
+    }
+  }
 
+  return <Grid container>
+    <Grid item xs={12}>
+      <SearchAppBar/>
+    </Grid>
+    <Grid
+      item xs={12}
+    >
+      <Grid
+        className={lClasses.gridActions}
+        container
+        direction="row"
+      >
+        <DetailBreadcrumbs/>
+      </Grid>
+      {hit && type ?
+        buildObjectForType(type) : null}
+    </Grid>
+  </Grid>
+}

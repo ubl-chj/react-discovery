@@ -8,6 +8,7 @@ import {MinimalResultsViewer} from './components'
 import {Provider} from 'react-redux'
 import React from "react"
 import ReactDOM from "react-dom"
+import {SolrResponseProvider} from "@react-discovery/solr"
 import {composeWithDevTools} from 'redux-devtools-extension'
 import {rootReducer} from "./state"
 
@@ -19,7 +20,7 @@ const routes =
       title: "React Discovery",
       view: <MinimalResultsViewer />,
     }),
-    '/detail/:id': route(async (req): Promise<any> => {
+    '/detail/:id': route((req) => {
       let id = req.params.id
       return {
         view: <DetailsView id={id} />,
@@ -40,7 +41,11 @@ const store: Store = createStore(
 ReactDOM.render(
   <Router routes={routes}>
     <Provider store={store}>
-      <View/>
+      <SolrResponseProvider
+        useHistory={true}
+      >
+        <View/>
+      </SolrResponseProvider>
     </Provider>
   </Router>,
   document.getElementById("app")

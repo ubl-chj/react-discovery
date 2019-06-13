@@ -1,22 +1,16 @@
+import {Card, CardActions, CardContent} from "@material-ui/core"
 import {
-  Card,
-  CardActions,
-  CardContent,
-} from "@material-ui/core"
-import {Domain, useHitViewStyles} from '.'
-import {
+  Domain,
   EntityDisplay,
-  FieldLabel,
-  Thumbnail,
-  TitleIdHeader,
-  ValueDisplay,
-  ViewSwitcherToggle,
   annotationDisplayFields,
   beschreibungDisplayFields,
   digitalisatDisplayFields,
-  facetDisplayFields, personDisplayFields
-} from '..'
-import {IHit, ISearchField} from "@react-discovery/solr"
+  facetDisplayFields,
+  personDisplayFields,
+  useHitViewStyles
+} from '.'
+import {FieldValueDisplay, Thumbnail, TitleIdHeader, ValueDisplay, ViewSwitcherToggle,} from '..'
+import {IHit, getSearchFields} from "@react-discovery/solr"
 import React, {ReactElement} from "react"
 import {buildHighlightedValueForHit, buildRandomUBLThumbnail} from "../../utils"
 
@@ -24,7 +18,6 @@ interface IDefaultItemComponent {
   classes: any;
   hit: IHit;
   i: number;
-  searchFields: ISearchField[];
 }
 
 // TODO add this to configuration
@@ -33,21 +26,14 @@ const filteredFields = ['author', 'material', 'format', 'originPlace', 'originDa
 
 const KulturobjektExpanded: React.FC<IDefaultItemComponent> = (props): ReactElement => {
   const classes: any = useHitViewStyles({})
-  const {hit, i, searchFields} = props
+  const searchFields = getSearchFields()
+  const {hit, i} = props
   const displayFields = searchFields.filter((sf): boolean => filteredFields.includes(sf.label))
   const title = buildHighlightedValueForHit('titel_t', hit)
-  const id = hit && hit._source.id
-  const buildFieldValueDisplay = (field): ReactElement => {
-    return (
-      <>
-        <FieldLabel label={field.label}/>
-        <ValueDisplay field={field.field} hit={hit} style={{flex: 'auto'}}/>
-      </>)
-  }
 
   return hit ? (
     <Card className={classes.root} key={i}>
-      <ViewSwitcherToggle id={id}/>
+      <ViewSwitcherToggle/>
       <TitleIdHeader
         id={hit._source.id}
         title={title}
@@ -66,7 +52,7 @@ const KulturobjektExpanded: React.FC<IDefaultItemComponent> = (props): ReactElem
               className={classes.content}
               key={key}
             >{hit._source && hit._source[field.field] ?
-                buildFieldValueDisplay(field) : null}
+                <FieldValueDisplay field={field} hit={hit}/> : null}
             </CardContent>)}
           <CardActions disableSpacing>
             <EntityDisplay
