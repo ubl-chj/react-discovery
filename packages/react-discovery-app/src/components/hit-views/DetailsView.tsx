@@ -67,8 +67,7 @@ export const DetailsView: React.FC<IDetailsView> = (props): ReactElement => {
   const displayFields = searchFields.filter((sf): boolean => filteredFields.includes(sf.label))
   const title = hit && buildHighlightedValueForHit('titel_t', hit)
   const type = hit && getTypeForId(hit, id)
-  console.log(type)
-  const buildKulturObjekt = () => {
+  const buildKulturObjekt = (): ReactElement => {
     return (
       <Card className={classes.root}>
         <TitleIdHeader

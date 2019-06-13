@@ -20,7 +20,7 @@ const routes =
       title: "React Discovery",
       view: <MinimalResultsViewer />,
     }),
-    '/detail/:id': route((req) => {
+    '/detail/:id': route((req): any => {
       let id = req.params.id
       return {
         view: <DetailsView id={id} />,

@@ -75,18 +75,19 @@ export const RelatedItems: React.FC<IRelatedItems> = (props): ReactElement => {
       )
     } else {
       return (
-        <Button
-          className={classes.button}
+        <Link
           data-testid='relations'
-          href=''
-          onClick={handleContextReset}
-          size="small"
-          variant="contained"
-        >
-          <Link href={`/?q=${id}`}>
+          href={`/?q=${id}`}>
+          <Button
+            className={classes.button}
+            href=''
+            onClick={handleContextReset}
+            size="small"
+            variant="contained"
+          >
             {t('relations')}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       )
     }
   }

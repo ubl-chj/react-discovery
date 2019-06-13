@@ -43,6 +43,14 @@ describe('React Discovery Base', (): void => {
     cy.get('[data-testid=expert-searchform]').submit()
     cy.get('input#expert-full-width').should('have.value', 'Banjul')
   })
+  it('changes language', (): void => {
+    cy.get('[data-testid=language-settings-menu]').click()
+    cy.get('[data-testid=language-settings-menu-item-1]').click()
+    cy.get('[data-testid=language-settings-menu-item-1]').click().should(($div): void => {
+      const className = $div[0].className
+      expect(className).to.match(/Mui-selected/)
+    })
+  })
   it('gets relations', (): void => {
     cy.get('[data-testid=tab-3]').click()
     cy.get('[data-testid=relations]').first().click({ force: true })
@@ -101,5 +109,26 @@ describe('React Discovery Base', (): void => {
   })
   it('resets query state', (): void => {
     cy.get('[data-testid=reset]').click()
+  })
+  it('access primary type detail view', (): void => {
+    cy.get('[data-testid=detail-link]').first().click()
+    cy.get('[data-testid=detail-result-link]').should('exist')
+  })
+  it('access secondary type detail view', (): void => {
+    cy.get('[data-testid=tab-2]').click()
+    cy.get('[data-testid=detail-link]').first().click({ force: true })
+    cy.get('[data-testid=detail-result-link]').should('exist')
+  })
+  it('access tertiary type detail view', (): void => {
+    cy.get('[data-testid=tab-3]').click()
+    cy.get('[data-testid=detail-link]').first().click({ force: true })
+    cy.get('[data-testid=detail-result-link]').should('exist')
+  })
+  it('access quarterary type detail view and click related items', (): void => {
+    cy.get('[data-testid=tab-4]').click({ force: true })
+    cy.wait(500)
+    cy.get('[data-testid=detail-link]').first().click()
+    cy.get('[data-testid=detail-result-link]').should('exist')
+    cy.get('[data-testid=relations]').first().click({ force: true })
   })
 })

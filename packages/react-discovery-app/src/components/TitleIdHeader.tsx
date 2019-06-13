@@ -2,7 +2,7 @@ import {Link, useCurrentRoute} from 'react-navi'
 import React, {ReactElement} from "react"
 import {CardHeader} from "@material-ui/core"
 import {InnerHtmlValue} from "./InnerHtmlValue"
-import {setStart} from "@react-discovery/solr"
+import {setStart, setSuggest} from "@react-discovery/solr"
 import {useDispatch} from 'react-redux'
 
 interface ITitleIdHeader {
@@ -15,14 +15,16 @@ export const TitleIdHeader: React.FC<ITitleIdHeader> = (props): ReactElement => 
   const pathname = route.url.pathname
   const dispatch = useDispatch()
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     dispatch(setStart({start: 0}))
+    dispatch(setSuggest({suggest: false}))
   }
   const buildTitleHeaderForPathName = (): ReactElement => {
     if (pathname === '/') {
       return (
         <div style={{display: 'flex'}}>
           <Link
+            data-testid='detail-link'
             href={`detail/${id}`}
             onClick={handleClick}
           >
@@ -33,7 +35,9 @@ export const TitleIdHeader: React.FC<ITitleIdHeader> = (props): ReactElement => 
     } else {
       return (
         <div style={{display: 'flex'}}>
-          <Link href={`/?q=${id}`}>
+          <Link
+            href={`/?q=${id}`}
+          >
             <CardHeader style={{width: '100%'}} title={<InnerHtmlValue value={title}/>}/>
           </Link>
         </div>

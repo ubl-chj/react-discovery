@@ -28,6 +28,7 @@ export const DetailBreadcrumbs: React.FC<any> = (): ReactElement => {
         {t('search')}
       </Link>
       <Link
+        data-testid='detail-result-link'
         href='/'
       >
         {t('result')}
