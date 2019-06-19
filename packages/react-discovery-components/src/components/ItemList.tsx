@@ -23,13 +23,14 @@ import {useDispatch} from "react-redux"
 import {useItemListStyles} from '../styles'
 
 export interface IItemListProps {
+  classes?: any;
   field: string;
   key: number;
   label: string;
 }
 
 export const ItemList: React.FC<IItemListProps> = (props): ReactElement => {
-  const classes: any = useItemListStyles({})
+  const classes: any = props.classes || useItemListStyles({})
   const dispatch = useDispatch()
   const {field, label} = props
   const aggregation = getAggregation(field)

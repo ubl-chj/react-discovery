@@ -1,13 +1,11 @@
 import {AppBar, Badge, IconButton, Toolbar, Typography} from '@material-ui/core'
 import {Bookmark, Menu} from '@material-ui/icons'
-import {ExpertSearchBox, ResetButton, SearchBox} from '.'
-import {LanguageSelectionMenu, ProfileMenu, SearchSettingsMenu} from './menus'
+import {ExpertSearchBox, IOverridableStyledComponent, LanguageSelectionMenu, ProfileMenu, ResetButton, SearchBox, SearchSettingsMenu, useSearchAppBarStyles} from '@react-discovery/components'
 import React, {ReactElement} from 'react'
 import {SolrParameters, getTypeDef} from "@react-discovery/solr"
-import {useSearchAppBarStyles} from "../styles"
 
-export const SearchAppBar: React.FC<any> = (): ReactElement => {
-  const classes: any = useSearchAppBarStyles({})
+export const SearchAppBar: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
+  const classes: any = props.classes || useSearchAppBarStyles({})
   const typeDef = getTypeDef()
 
   return (

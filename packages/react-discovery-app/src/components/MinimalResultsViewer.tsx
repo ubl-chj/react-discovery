@@ -1,11 +1,10 @@
 import {CircularProgress, Grid, useMediaQuery} from '@material-ui/core'
-import {FacetViewSwitcher, MinWidthResultsGrid} from '.'
+import {FacetViewSwitcher, MinWidthResultsGrid, SearchAppBar} from '.'
 import {
   GroupSelectedFilters,
   HitStats,
   Pagination,
   RefinementListFilters,
-  SearchAppBar,
   SortingSelector,
   Suggester,
   TabsAppBar,

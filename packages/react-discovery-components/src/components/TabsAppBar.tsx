@@ -11,6 +11,7 @@ import {
   setSelectedFilters, setStart, setSuggest, setTypeDef, usePrevious
 } from "@react-discovery/solr"
 import React, {ReactElement, useEffect} from 'react'
+import {IOverridableStyledComponent} from ".."
 import {useDispatch} from "react-redux"
 import {useTranslation} from "react-i18next"
 
@@ -23,8 +24,8 @@ export const useTabsAppBarStyles = makeStyles((theme: Theme): any => ({
   },
 }))
 
-export const TabsAppBar: React.FC<any> = (): ReactElement => {
-  const classes: any = useTabsAppBarStyles({})
+export const TabsAppBar: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
+  const classes: any = props.classes || useTabsAppBarStyles({})
   const dispatch = useDispatch()
   const docTypes = getDocTypes()
   const stringInput = getStringInput()

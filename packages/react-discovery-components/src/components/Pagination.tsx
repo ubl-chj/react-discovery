@@ -1,15 +1,16 @@
 import {ChevronLeft, ChevronRight, SkipNext, SkipPrevious} from '@material-ui/icons'
-import {List, ListItem, ListItemText, makeStyles} from '@material-ui/core'
+import {List, ListItem, ListItemText} from '@material-ui/core'
 import React, {ReactElement, useEffect} from "react"
 import {
   getNumFound, getSelectedIndex, getSize, getStart, getStringInput,
   setSelectedIndex, setStart, setSuggest, usePrevious
 } from "@react-discovery/solr"
+import {IOverridableStyledComponent} from "../index"
 import {useDispatch} from 'react-redux'
 import {usePaginationStyles} from "../styles"
 
-export const Pagination: React.FC<any> = (): ReactElement => {
-  const classes: any = usePaginationStyles({})
+export const Pagination: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
+  const classes: any = props.classes || usePaginationStyles({})
   const dispatch = useDispatch()
   const start = getStart()
   const size = getSize()

@@ -1,12 +1,13 @@
-import {IconButton, Menu, MenuItem, makeStyles} from "@material-ui/core"
+import {IconButton, Menu, MenuItem} from "@material-ui/core"
 import React, {ReactElement} from "react"
 import {getCurrentLanguage, getLanguages, setCurrentLanguage} from "@react-discovery/solr"
+import {IOverridableStyledComponent} from "../.."
 import Language from "@material-ui/icons/Language"
 import {useDispatch} from "react-redux"
 import {useMenuButtonStyles} from "../../styles"
 
-export const LanguageSelectionMenu: React.FC<any> = (): ReactElement => {
-  const classes: any = useMenuButtonStyles({})
+export const LanguageSelectionMenu: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
+  const classes: any = props.classes || useMenuButtonStyles({})
   const currentLanguage = getCurrentLanguage()
   const dispatch = useDispatch()
   const languages = getLanguages()

@@ -12,7 +12,6 @@ import {
 } from '.'
 import {
   FieldValueDisplay,
-  SearchAppBar,
   Thumbnail,
   TitleIdHeader,
   ValueDisplay,
@@ -24,7 +23,8 @@ import {getHits, getSearchFields, getStringInput, setQueryInput, usePrevious} fr
 import Beschreibung from './Beschreibung'
 import Digitalisat from './Digitalisat'
 import Person from './Person'
-import {buildRandomUBLThumbnail,} from "../../utils"
+import {SearchAppBar} from '..'
+import {buildRandomUBLThumbnail} from "../../utils"
 import {useDispatch} from "react-redux"
 
 interface IDetailsView {

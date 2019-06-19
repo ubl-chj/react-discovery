@@ -4,8 +4,9 @@ import {getTerms, setStart, setSuggest} from "@react-discovery/solr"
 import Downshift from 'downshift'
 import deburr from 'lodash/deburr'
 import {useDispatch} from "react-redux"
-import {useSuggesterStyles} from "../styles"
+import {useSearchBoxStyles, useSuggesterStyles} from "../styles"
 import {useTranslation} from "react-i18next"
+import {IOverridableStyledComponent} from "../index"
 
 interface ISuggestion {
   highlightedIndex: number;
@@ -57,9 +58,9 @@ const renderInput = (inputProps): ReactElement => {
   )
 }
 
-export const Suggester: React.FC<any> = (): ReactElement => {
+export const Suggester: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
   const {t} = useTranslation()
-  const classes: any = useSuggesterStyles({})
+  const classes: any = props.classes || useSuggesterStyles({})
   const dispatch = useDispatch()
   const terms = getTerms()
   const [selectedItem, setSelectedItem] = React.useState([])

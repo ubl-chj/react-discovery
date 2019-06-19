@@ -1,13 +1,14 @@
 import {IconButton, Menu, MenuItem} from "@material-ui/core"
 import React, {ReactElement} from "react"
 import {getTypeDef, setTypeDef} from "@react-discovery/solr"
+import {IOverridableStyledComponent} from "../.."
 import Settings from "@material-ui/icons/Settings"
 import {useDispatch} from "react-redux"
 import {useMenuButtonStyles} from "../../styles"
 import {useTranslation} from "react-i18next"
 
-export const SearchSettingsMenu: React.FC<any> = (): ReactElement => {
-  const classes: any = useMenuButtonStyles({})
+export const SearchSettingsMenu: React.FC<IOverridableStyledComponent> = (props): ReactElement => {
+  const classes: any = props.classes || useMenuButtonStyles({})
   const dispatch = useDispatch()
   const {t} = useTranslation()
   const typeDef = getTypeDef()
