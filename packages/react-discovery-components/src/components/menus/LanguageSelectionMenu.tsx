@@ -1,31 +1,15 @@
 import {IconButton, Menu, MenuItem, makeStyles} from "@material-ui/core"
 import React, {ReactElement} from "react"
-import {getTypeDef, setTypeDef} from "@react-discovery/solr"
-import Settings from "@material-ui/icons/Settings"
+import {getCurrentLanguage, getLanguages, setCurrentLanguage} from "@react-discovery/solr"
+import Language from "@material-ui/icons/Language"
 import {useDispatch} from "react-redux"
-import {useTranslation} from "react-i18next"
+import {useMenuButtonStyles} from "../../styles"
 
-const useStyles = makeStyles((theme): any => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-}))
-
-export const SearchSettingsMenu: React.FC<any> = (): ReactElement => {
-  const classes: any = useStyles({})
+export const LanguageSelectionMenu: React.FC<any> = (): ReactElement => {
+  const classes: any = useMenuButtonStyles({})
+  const currentLanguage = getCurrentLanguage()
   const dispatch = useDispatch()
-  const {t} = useTranslation()
-  const typeDef = getTypeDef()
-  const parsers = [
-    {
-      key: 'edismax',
-      label: 'simple'
-    },
-    {
-      key: 'lucene',
-      label: 'expert'
-    }
-  ]
+  const languages = getLanguages()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
@@ -34,8 +18,8 @@ export const SearchSettingsMenu: React.FC<any> = (): ReactElement => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleMenuAction = (typeDef): void => {
-    dispatch(setTypeDef({typeDef}))
+  const handleMenuAction = (locale): void => {
+    dispatch(setCurrentLanguage({currentLanguage: locale}))
     setAnchorEl(null)
   }
 
@@ -44,16 +28,16 @@ export const SearchSettingsMenu: React.FC<any> = (): ReactElement => {
   }
 
   const buildMenuItems = (): ReactElement[] => {
-    return parsers && parsers.map((parser, i): ReactElement =>
+    return languages && languages.map((language, i): ReactElement =>
       <MenuItem
         button={true}
         component='div'
-        data-testid={`search-settings-menu-item-${i}`}
+        data-testid={`language-settings-menu-item-${i}`}
         divider
         key={i}
-        onClick={(): void => handleMenuAction(parser.key)}
-        selected={typeDef === parser.key}
-      >{t(parser.label)}
+        onClick={(): void => handleMenuAction(language.locale)}
+        selected={currentLanguage === language.locale}
+      >{language.label}
       </MenuItem>)
   }
 
@@ -83,12 +67,12 @@ export const SearchSettingsMenu: React.FC<any> = (): ReactElement => {
         aria-owns={isMenuOpen ? 'material-appbar' : undefined}
         className={classes.menuButton}
         color="inherit"
-        data-testid='search-settings-menu'
+        data-testid='language-settings-menu'
         edge="end"
         href=''
         onClick={handleMenuOpen}
       >
-        <Settings/>
+        <Language/>
       </IconButton>
       {renderMenu}
     </>

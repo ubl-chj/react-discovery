@@ -6,18 +6,10 @@ import {
   setSelectedIndex, setStart, setSuggest, usePrevious
 } from "@react-discovery/solr"
 import {useDispatch} from 'react-redux'
-
-const useStyles = makeStyles((theme): any => ({
-  button: {
-    border: `1px solid ${
-      theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'
-    }`,
-    padding: '5px 16px',
-  },
-}));
+import {usePaginationStyles} from "../styles"
 
 export const Pagination: React.FC<any> = (): ReactElement => {
-  const classes: any = useStyles({})
+  const classes: any = usePaginationStyles({})
   const dispatch = useDispatch()
   const start = getStart()
   const size = getSize()

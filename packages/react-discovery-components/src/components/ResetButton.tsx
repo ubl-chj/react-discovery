@@ -1,18 +1,13 @@
-import {IconButton, makeStyles} from "@material-ui/core"
 import React, {ReactElement} from "react"
 import {SolrParameters, getRootContext, setQueryInput, setStart, setTypeDef} from "@react-discovery/solr"
+import {IconButton} from "@material-ui/core"
 import {Redo} from "@material-ui/icons"
 import {useDispatch} from "react-redux"
 import {useNavigation} from 'react-navi'
-
-const useStyles = makeStyles((theme): any => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-}))
+import {useResetButtonStyles} from "../styles"
 
 export const ResetButton: React.FC<any> = (): ReactElement => {
-  const classes: any = useStyles({})
+  const classes: any = useResetButtonStyles({})
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const rootContext = getRootContext()

@@ -1,9 +1,10 @@
-import {Chip, MenuItem, Paper, TextField, makeStyles} from '@material-ui/core'
+import {Chip, MenuItem, Paper, TextField} from '@material-ui/core'
 import React, {ReactElement} from 'react'
 import {getTerms, setStart, setSuggest} from "@react-discovery/solr"
 import Downshift from 'downshift'
 import deburr from 'lodash/deburr'
 import {useDispatch} from "react-redux"
+import {useSuggesterStyles} from "../styles"
 import {useTranslation} from "react-i18next"
 
 interface ISuggestion {
@@ -34,41 +35,6 @@ const renderSuggestion = (props: ISuggestion): ReactElement => {
   )
 }
 
-const useStyles = makeStyles((theme): any => ({
-  chip: {
-    margin: theme.spacing(0.5, 0.25),
-  },
-  container: {
-    flexGrow: 1,
-    height: '105px',
-    padding: '8px',
-    position: 'relative',
-  },
-  divider: {
-    height: theme.spacing(2),
-  },
-  inputInput: {
-    flexGrow: 1,
-    width: 'auto',
-  },
-  inputRoot: {
-    flexWrap: 'wrap',
-  },
-  label: {
-    whiteSpace: 'initial'
-  },
-  paper: {
-    left: 0,
-    marginTop: theme.spacing(1),
-    position: 'absolute',
-    right: 0,
-    zIndex: 1,
-  },
-  root: {
-    flexGrow: 1,
-  },
-}))
-
 const renderInput = (inputProps): ReactElement => {
   const {InputProps, classes, ref, ...other} = inputProps
   return (
@@ -93,7 +59,7 @@ const renderInput = (inputProps): ReactElement => {
 
 export const Suggester: React.FC<any> = (): ReactElement => {
   const {t} = useTranslation()
-  const classes: any = useStyles({})
+  const classes: any = useSuggesterStyles({})
   const dispatch = useDispatch()
   const terms = getTerms()
   const [selectedItem, setSelectedItem] = React.useState([])
