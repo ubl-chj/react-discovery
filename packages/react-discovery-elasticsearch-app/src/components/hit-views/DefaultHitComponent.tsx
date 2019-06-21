@@ -2,7 +2,7 @@ import {Card, CardContent} from "@material-ui/core"
 import {FieldValueDisplay, Thumbnail, TitleIdHeader, buildHighlightedValueForHit} from '@react-discovery/components'
 import {IHit, ISearchField, getSearchFields} from "@react-discovery/solr"
 import React, {ReactElement} from "react"
-import {buildRandomUBLThumbnail} from "../../utils"
+import {Domain} from '../../enum'
 import {useHitViewStyles} from '.'
 
 interface IDefaultItemComponent {
@@ -16,8 +16,9 @@ const DefaultHitComponent: React.FC<IDefaultItemComponent> = (props: IDefaultIte
   const classes: any = useHitViewStyles({})
   const searchFields = getSearchFields()
   const {hit, i} = props
-  const title = buildHighlightedValueForHit('titel_t', hit)
-
+  const {_source} = hit
+  const title = buildHighlightedValueForHit('title', hit)
+  const thumbnail = _source && _source.thumbnail + Domain.THUMBNAIL_API_REQUEST
   return (
     <Card className={classes.root} key={i}>
       <TitleIdHeader
@@ -25,7 +26,7 @@ const DefaultHitComponent: React.FC<IDefaultItemComponent> = (props: IDefaultIte
         title={title}
       />
       <div style={{display: 'flex'}}>
-        <Thumbnail image={buildRandomUBLThumbnail()}/>
+        <Thumbnail image={thumbnail}/>
         <div className={classes.details}>
           {searchFields.map((field, key): ReactElement =>
             <CardContent

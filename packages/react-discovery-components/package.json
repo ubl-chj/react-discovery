@@ -31,7 +31,7 @@
     "@material-ui/core": "^4.0.1",
     "@material-ui/icons": "^4.0.1",
     "@material-ui/styles": "^4.0.1",
-    "@react-discovery/solr": "^0.1.2"
+    "@react-discovery/solr": "^0.1.3"
   },
   "devDependencies": {
     "@types/react": "^16.8.14",
